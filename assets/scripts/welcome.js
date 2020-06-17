@@ -24,28 +24,32 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        myGround:{
-            type:cc.Node,
-            default:null
+        myGround: {
+            type: cc.Node,
+            default: null
         },
-        myLoading:{
-            type:cc.Prefab,
-            default:null
+        myLoading: {
+            type: cc.Prefab,
+            default: null
         }
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onLoad() {
         this.myLoading = cc.instantiate(this.myLoading);
         cc.log(this.myGround);
         this.myGround.addChild(this.myLoading);
         this.myLoading.y = 0;
         var loading = this.myLoading.getComponent("loading");
-        loading.setLoadingItemWidth(0.2);
+        loading.setLoadingItemWidth(1);
+        loading.finalFun = () => {
+            loading.node.active = false;
+            this.myGround.getChildByName("logo").active = false;
+        }
     },
 
-    start () {
+    start() {
 
     },
 

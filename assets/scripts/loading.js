@@ -24,27 +24,38 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        myLoadingItem:{
-            type:cc.Node,
-            default:null
+        myLoadingItem: {
+            type: cc.Node,
+            default: null
+        },
+        mySpeed: {
+            type: cc.Integer,
+            default: 100
         }
     },
-    setLoadingItemWidth:function (widthVal) { 
-        if(widthVal>1 || widthVal<0){
+    setLoadingItemWidth: function (widthVal) {
+        if (widthVal > 1 || widthVal < 0) {
             return
         }
-        var loadingWidth = this.maxLoadingWidth * widthVal;
-        this.myLoadingItem.width = loadingWidth;
+        this.loadingWidth = this.maxLoadingWidth * widthVal;
+        this.myLoadingItem.width = 0;
     },
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onLoad() {
         this.maxLoadingWidth = this.myLoadingItem.width;
     },
-
-    start () {
+    start() {
 
     },
 
-    // update (dt) {},
+    update(dt) {
+        if (this.myLoadingItem.width < this.loadingWidth) {
+            this.myLoadingItem.width += dt * this.mySpeed;
+        } else {
+            if (this.finalFun) {
+                this.finalFun();
+            }
+        }
+    },
 });

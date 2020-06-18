@@ -24,45 +24,33 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        myGround: {
-            type: cc.Node,
-            default: null
-        },
-        myLoading: {
-            type: cc.Prefab,
-            default: null
-        },
-        myLoginPrefab:{
-            type:cc.Prefab,
-            default:null
-        }
     },
-    onClickLogin:function (target,data) { 
-        cc.log(this.myLoginPrefab);
-        var node = cc.instantiate(this.myLoginPrefab);
-        this.myGround.addChild(node);
-        if(data == "zh"){
-            node.getComponent("login").show();
-        }
-     },
+
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad() {
-        this.myLoading = cc.instantiate(this.myLoading);
-        cc.log(this.myGround);
-        this.myGround.addChild(this.myLoading);
-        this.myLoading.y = 0;
-        var loading = this.myLoading.getComponent("loading");
-        loading.setLoadingItemWidth(1);
-        loading.finalFun = () => {
-            loading.node.active = false;
-            this.myGround.getChildByName("logo").active = false;
-        }
+    onLoad () {
+        this.node.active = false;
+        var node = this.node.getChildByName("Background");
+        var nodeLogin = this.node.getChildByName("login");
+        nodeLogin = nodeLogin.getChildByName("ui_win_rect");
+        node.on("mousedown",function (e) { 
+            cc.log(e)
+            this.node.active = false;
+            e.stopPropagation();
+        }.bind(this),this)
+        nodeLogin.on("mousedown",function (e) { 
+            cc.log(e)
+            e.stopPropagation();
+        }.bind(this),this)
     },
-
-    start() {
+    show:function (e) { 
+        this.node.active = true;
+    },
+    hide:function (e) { 
+        this.node.active = false;
+    },
+    start () {
 
     },
-
     // update (dt) {},
 });

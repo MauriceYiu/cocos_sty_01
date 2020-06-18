@@ -24,6 +24,10 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
+        myAnimation:{
+            type:cc.Animation,
+            default:null
+        }
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -35,19 +39,23 @@ cc.Class({
         nodeLogin = nodeLogin.getChildByName("ui_win_rect");
         node.on("mousedown",function (e) { 
             cc.log(e)
-            this.node.active = false;
+            this.hide();
             e.stopPropagation();
         }.bind(this),this)
         nodeLogin.on("mousedown",function (e) { 
             cc.log(e)
             e.stopPropagation();
         }.bind(this),this)
+        this.node.getChildByName("login").getComponent(cc.Animation).toHIde = function(){
+            this.node.active = false;
+        }.bind(this)
     },
     show:function (e) { 
         this.node.active = true;
+        this.myAnimation.play("scalToShow");
     },
     hide:function (e) { 
-        this.node.active = false;
+        this.myAnimation.play("scalTohide");
     },
     start () {
 
